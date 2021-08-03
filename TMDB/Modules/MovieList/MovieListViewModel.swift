@@ -26,6 +26,7 @@ struct MovieListViewModel {
 
     struct ViewModel {
         struct Popular {
+            let id: Int
             let title: String
         }
     }

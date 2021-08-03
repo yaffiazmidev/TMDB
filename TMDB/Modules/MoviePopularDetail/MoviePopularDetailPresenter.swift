@@ -7,23 +7,22 @@
 
 import Foundation
 
-protocol MoviePopularDetailPrsentingLogic {
-    func presentMovieListPopular(response: MovieListViewModel.Response.Movie)
+protocol MoviePopularDetailPresentingLogic {
+    func presentMoviePopularDetail(response: MoviePopularDetailViewModel.Response)
 }
 
-class MoviePopularDetailPresenter: MoviePopularDetailPrsentingLogic {
+class MoviePopularDetailPresenter: MoviePopularDetailPresentingLogic {
     
-    weak var view: MovieListDisplayLogic?
+    weak var view: MoviePopularDetailDisplayLogic?
     
-    func presentMovieListPopular(response: MovieListViewModel.Response.Movie) {
-        
-        var popularList: [MovieListViewModel.ViewModel.Popular] = []
-        
-        response.popular?.results?.forEach({ popular in
-            let _popular = MovieListViewModel.ViewModel.Popular(title: popular.title ?? "")
-            popularList.append(_popular)
-        })
-        
-        view?.displayMovieListPopular(popularList: popularList)
+    func presentMoviePopularDetail(response: MoviePopularDetailViewModel.Response) {
+        if let detail = response.popularDetail {
+            view?.displayPopularDetail(
+                detail: MoviePopularDetailViewModel.ViewModel(
+                    title: detail.title ?? "",
+                    overview: detail.overview ?? ""
+                )
+            )
+        }
     }
 }

@@ -59,8 +59,11 @@ class MovieListViewController: UIViewController {
         }.disposed(by: bag)
         
         // Bind a model selected handler
-        tableView.rx.modelSelected(MovieListViewModel.ViewModel.Popular.self).bind { popular in
+        tableView.rx.modelSelected(MovieListViewModel.ViewModel.Popular.self).bind { [weak self] popular in
             print(popular.title)
+            let vc = MoviePopularDetailViewController()
+            vc.movieId = popular.id
+            self?.navigationController?.pushViewController(vc, animated: true)
         }.disposed(by: bag)
         
         // Fetch items

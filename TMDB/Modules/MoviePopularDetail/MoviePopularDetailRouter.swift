@@ -12,7 +12,7 @@ protocol MoviePopularDetailRoutingLogic {
 }
 
 class MoviePopularDetailRouter: MoviePopularDetailRoutingLogic {
-    weak var parentController: MovieListViewController?
+    weak var parentController: MoviePopularDetailViewController?
     private var navigationController: UINavigationController? { parentController?.navigationController }
 }
 

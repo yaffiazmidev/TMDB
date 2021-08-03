@@ -20,7 +20,8 @@ class MovieListPresenter: MovieListPresentingLogic {
         var popularList: [MovieListViewModel.ViewModel.Popular] = []
         
         response.popular?.results?.forEach({ popular in
-            let _popular = MovieListViewModel.ViewModel.Popular(title: popular.title ?? "")
+            let _popular = MovieListViewModel.ViewModel.Popular(id: popular.id ?? 0,
+                                                                title: popular.title ?? "")
             popularList.append(_popular)
         })
         

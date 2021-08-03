@@ -18,15 +18,11 @@ struct MoviePopularDetailViewModel {
     }
 
     struct Response {
-        struct Movie {
-            let popular: MovieListPopularEntity?
-        }
-        
+        let popularDetail: MoviePopularDetailEntity?
     }
 
     struct ViewModel {
-        struct Popular {
-            let title: String
-        }
+        let title: String
+        let overview: String
     }
 }

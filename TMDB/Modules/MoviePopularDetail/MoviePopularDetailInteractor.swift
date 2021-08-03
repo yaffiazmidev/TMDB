@@ -9,18 +9,18 @@ import Foundation
 import RxSwift
 
 protocol MoviePopularDetailInteractorBusinessLogic {
-    func fetchMovieListPopular(page: Int)
+    func fetchPopularDetail(id: Int)
 }
 
 class MoviePopularDetailInteractor: MoviePopularDetailInteractorBusinessLogic {
     
-    var worker: MovieListWorkerDelegate?
-    var presenter: MovieListPresentingLogic?
+    var worker: MoviePopularDetailWorkerDelegate?
+    var presenter: MoviePopularDetailPresentingLogic?
     private var bag = DisposeBag()
     
-    func fetchMovieListPopular(page: Int) {
-        worker?.getMoviePopular(page).subscribe(onNext: { [weak self] response in
-            self?.presenter?.presentMovieListPopular(response: MovieListViewModel.Response.Movie(popular: response))
+    func fetchPopularDetail(id: Int) {
+        worker?.getPopularDetail(id).subscribe(onNext: { [weak self] response in
+            self?.presenter?.presentMoviePopularDetail(response: MoviePopularDetailViewModel.Response(popularDetail: response))
         }, onError: { error in
             print(error.localizedDescription)
         }).disposed(by: bag)

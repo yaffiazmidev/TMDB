@@ -9,19 +9,15 @@ import Foundation
 import RxSwift
 
 protocol MoviePopularDetailWorkerDelegate {
-    func getMoviePopular(_ page: Int) -> Observable<MovieListPopularEntity>
+    func getPopularDetail(_ id: Int) -> Observable<MoviePopularDetailEntity>
 }
 
 class MoviePopularDetailWorker: MoviePopularDetailWorkerDelegate {
     private let service = NetworkService.shared
     
-    func getMoviePopular(_ page: Int) -> Observable<MovieListPopularEntity> {
+    func getPopularDetail(_ id: Int) -> Observable<MoviePopularDetailEntity> {
         let enpoint = Enpoint()
-        enpoint.path = "/movie/popular"
-        enpoint.parameters = [
-            "page": page,
-            "per_page": 10
-        ]
+        enpoint.path = "/movie/\(id)"
         return service.requets(enpoint)
     }
 }
