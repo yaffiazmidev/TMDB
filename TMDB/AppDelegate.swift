@@ -18,7 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // MARK: Setup Root
         let window = UIWindow(frame: UIScreen.main.bounds)
         window.makeKeyAndVisible()
-        window.rootViewController = HomeViewController()
+        window.rootViewController = MovieListViewController()
         self.window = window
         
         return true
