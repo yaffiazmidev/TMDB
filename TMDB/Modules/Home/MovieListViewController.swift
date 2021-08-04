@@ -20,6 +20,8 @@ class MovieListViewController: UIViewController {
     
     let tableView: UITableView = {
         let table = UITableView()
+        table.separatorStyle = .none
+        table.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         return table
     }()
     
@@ -27,10 +29,8 @@ class MovieListViewController: UIViewController {
     var populars = PublishSubject<[MovieListViewModel.ViewModel.Popular]>()
 
     override func viewDidLoad() {
+        super.viewDidLoad()
         view.addSubview(tableView)
-        
-        tableView.separatorStyle = .none
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         
         bindTableView()
     }
@@ -60,10 +60,7 @@ class MovieListViewController: UIViewController {
         
         // Bind a model selected handler
         tableView.rx.modelSelected(MovieListViewModel.ViewModel.Popular.self).bind { [weak self] popular in
-            print(popular.title)
-            let vc = MoviePopularDetailViewController()
-            vc.movieId = popular.id
-            self?.navigationController?.pushViewController(vc, animated: true)
+            self?.router?.navigateToPopularDetail(popular.id)
         }.disposed(by: bag)
         
         // Fetch items

@@ -24,5 +24,10 @@ struct MoviePopularDetailViewModel {
     struct ViewModel {
         let title: String
         let overview: String
+        let posterPath: String
+        let backdropPath: String
+        let duration: Int
+        let releaseDate: String
+        let rating: Float
     }
 }

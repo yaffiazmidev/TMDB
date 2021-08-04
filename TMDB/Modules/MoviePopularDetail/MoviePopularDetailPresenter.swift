@@ -20,7 +20,12 @@ class MoviePopularDetailPresenter: MoviePopularDetailPresentingLogic {
             view?.displayPopularDetail(
                 detail: MoviePopularDetailViewModel.ViewModel(
                     title: detail.title ?? "",
-                    overview: detail.overview ?? ""
+                    overview: detail.overview ?? "",
+                    posterPath: detail.posterPath ?? "",
+                    backdropPath: detail.backdropPath ?? "",
+                    duration: detail.runtime ?? 0,
+                    releaseDate: detail.releaseDate ?? "",
+                    rating: detail.voteAverage ?? 0.0
                 )
             )
         }

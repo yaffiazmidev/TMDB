@@ -11,7 +11,6 @@ pod 'Moya', '~> 14.0'
 pod 'RxSwift'
 pod 'RxCocoa'
 pod 'SwiftyJSON'
-
-
+pod 'Kingfisher'
 
 end

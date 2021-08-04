@@ -8,12 +8,19 @@
 import UIKit
 
 protocol MovieListRoutingLogic {
-    
+    func navigateToPopularDetail(_ movieId: Int)
 }
 
 class MovieListRouter: MovieListRoutingLogic {
     weak var parentController: MovieListViewController?
     private var navigationController: UINavigationController? { parentController?.navigationController }
+    
+    func navigateToPopularDetail(_ movieId: Int) {
+        let vc = MoviePopularDetailViewController()
+        vc.movieId = movieId
+        vc.modalPresentationStyle = .overFullScreen
+        parentController?.present(vc, animated: true, completion: nil)
+    }
 }
 
 extension MovieListRouter {
