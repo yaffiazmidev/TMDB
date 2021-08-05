@@ -21,7 +21,6 @@ class MovieListViewController: UIViewController {
     let tableView: UITableView = {
         let table = UITableView()
         table.separatorStyle = .none
-        table.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         return table
     }()
     
@@ -30,7 +29,10 @@ class MovieListViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        title = "Popular Movies"
         view.addSubview(tableView)
+        
+        tableView.rx.setDelegate(self).disposed(by: bag)
         
         bindTableView()
     }
@@ -50,12 +52,15 @@ class MovieListViewController: UIViewController {
     }
     
     func bindTableView() {
+        tableView.register(MovieListPopularTableViewCell.self,
+                           forCellReuseIdentifier: MovieListPopularTableViewCell.identifier)
+        
         // Bind items to table
         populars.bind(
-            to: tableView.rx.items(cellIdentifier: "cell",
-                                   cellType: UITableViewCell.self)
+            to: tableView.rx.items(cellIdentifier: MovieListPopularTableViewCell.identifier,
+                                   cellType: MovieListPopularTableViewCell.self)
         ) { row, item, cell in
-            cell.textLabel?.text = item.title
+            cell.setupViews(popular: item)
         }.disposed(by: bag)
         
         // Bind a model selected handler
@@ -75,3 +80,10 @@ extension MovieListViewController: MovieListDisplayLogic {
         populars.onCompleted()
     }
 }
+
+extension MovieListViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 298
+    }
+}
+

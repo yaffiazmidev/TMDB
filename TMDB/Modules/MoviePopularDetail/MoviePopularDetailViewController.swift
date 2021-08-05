@@ -28,7 +28,7 @@ class MoviePopularDetailViewController: UIViewController {
     let backgroundImage: UIImageView = {
         let img = UIImageView()
         img.clipsToBounds = true
-        img.backgroundColor = .red
+        img.backgroundColor = .black
         img.contentMode = .scaleAspectFill
         return img
     }()
@@ -36,7 +36,7 @@ class MoviePopularDetailViewController: UIViewController {
     let posterImage: UIImageView = {
         let img = UIImageView()
         img.clipsToBounds = true
-        img.backgroundColor = .blue
+        img.backgroundColor = .white
         img.layer.cornerRadius = 16
         img.contentMode = .scaleAspectFill
         return img

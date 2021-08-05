@@ -28,6 +28,9 @@ struct MovieListViewModel {
         struct Popular {
             let id: Int
             let title: String
+            let posterPath: String
+            let backdropPath: String
+            let rating: Float
         }
     }
 }

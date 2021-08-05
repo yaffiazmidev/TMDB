@@ -21,7 +21,11 @@ class MovieListPresenter: MovieListPresentingLogic {
         
         response.popular?.results?.forEach({ popular in
             let _popular = MovieListViewModel.ViewModel.Popular(id: popular.id ?? 0,
-                                                                title: popular.title ?? "")
+                                                                title: popular.title ?? "",
+                                                                posterPath: popular.posterPath ?? "",
+                                                                backdropPath: popular.backdropPath ?? "",
+                                                                rating: popular.voteAverage ?? 0
+            )
             popularList.append(_popular)
         })
         
