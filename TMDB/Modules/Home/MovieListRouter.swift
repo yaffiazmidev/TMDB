@@ -18,8 +18,9 @@ class MovieListRouter: MovieListRoutingLogic {
     func navigateToPopularDetail(_ movieId: Int) {
         let vc = MoviePopularDetailViewController()
         vc.movieId = movieId
-        vc.modalPresentationStyle = .overFullScreen
-        parentController?.present(vc, animated: true, completion: nil)
+        let nav = UINavigationController(rootViewController: vc)
+        nav.modalPresentationStyle = .overFullScreen
+        parentController?.present(nav, animated: true, completion: nil)
     }
 }
 

@@ -10,6 +10,7 @@ import RxSwift
 
 protocol MoviePopularDetailWorkerDelegate {
     func getPopularDetail(_ id: Int) -> Observable<MoviePopularDetailEntity>
+    func getPopularReviews(_ id: Int) -> Observable<MoviePopularReviewListEntity>
 }
 
 class MoviePopularDetailWorker: MoviePopularDetailWorkerDelegate {
@@ -18,6 +19,12 @@ class MoviePopularDetailWorker: MoviePopularDetailWorkerDelegate {
     func getPopularDetail(_ id: Int) -> Observable<MoviePopularDetailEntity> {
         let enpoint = Enpoint()
         enpoint.path = "/movie/\(id)"
+        return service.requets(enpoint)
+    }
+    
+    func getPopularReviews(_ id: Int) -> Observable<MoviePopularReviewListEntity> {
+        let enpoint = Enpoint()
+        enpoint.path = "/movie/\(id)/reviews"
         return service.requets(enpoint)
     }
 }

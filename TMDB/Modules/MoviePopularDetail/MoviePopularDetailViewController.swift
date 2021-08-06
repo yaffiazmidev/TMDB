@@ -9,7 +9,8 @@ import UIKit
 import RxSwift
 
 protocol MoviePopularDetailDisplayLogic: AnyObject {
-    func displayPopularDetail(detail: MoviePopularDetailViewModel.ViewModel)
+    func displayPopularDetail(detail: MoviePopularDetailViewModel.ViewModel.Detail)
+    func displayPopularReviews(reviewList: [MoviePopularDetailViewModel.ViewModel.Reviews])
 }
 
 class MoviePopularDetailViewController: UIViewController {
@@ -83,6 +84,15 @@ class MoviePopularDetailViewController: UIViewController {
         return label
     }()
     
+    let seeReviewsLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.italicSystemFont(ofSize: 12)
+        label.textColor = .lightGray
+        label.text = "See all reviews"
+        label.isUserInteractionEnabled = true
+        return label
+    }()
+    
     let overviewLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
@@ -96,7 +106,13 @@ class MoviePopularDetailViewController: UIViewController {
     private var bag = DisposeBag()
     
     var movieId: Int?
-    var popular = PublishSubject<MoviePopularDetailViewModel.ViewModel>()
+    var populars = PublishSubject<MoviePopularDetailViewModel.ViewModel.Detail>()
+    var reviews: [MoviePopularDetailViewModel.ViewModel.Reviews] = []
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.isNavigationBarHidden = true
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -105,6 +121,15 @@ class MoviePopularDetailViewController: UIViewController {
         
         let didTapGestureCloseIcon = UITapGestureRecognizer(target: self, action: #selector(onDismiss))
         closeIcon.addGestureRecognizer(didTapGestureCloseIcon)
+        
+        let didTapGestureSeeAllReviewsLabel = UITapGestureRecognizer(target: self, action: #selector(didClickSeeAllReviewsLabel))
+        seeReviewsLabel.addGestureRecognizer(didTapGestureSeeAllReviewsLabel)
+    }
+    
+    @objc func didClickSeeAllReviewsLabel() {
+        let vc = MoviePopularReviewListViewController()
+        vc.reviews = reviews
+        navigationController?.pushViewController(vc, animated: true)
     }
     
     @objc func onDismiss() {
@@ -122,6 +147,7 @@ class MoviePopularDetailViewController: UIViewController {
         view.addSubview(ratingIcon)
         view.addSubview(ratingLabel)
         view.addSubview(overviewLabel)
+        view.addSubview(seeReviewsLabel)
         
         let gradient = CAGradientLayer()
         gradient.frame = backgroundImage.bounds
@@ -144,27 +170,27 @@ class MoviePopularDetailViewController: UIViewController {
         
         titleLabel.anchor(
             top: nil, paddingTop: 0,
-            bottom: releaseDateLabel.topAnchor, paddingBottom: 8,
+            bottom: nil, paddingBottom: 0,
             left: posterImage.rightAnchor, paddingLeft: 16,
             right: view.rightAnchor, paddingRight: 16,
             width: 0, height: 0)
         
         releaseDateLabel.anchor(
-            top: titleLabel.bottomAnchor, paddingTop: 0,
-            bottom: durationLabel.topAnchor, paddingBottom: 0,
+            top: titleLabel.bottomAnchor, paddingTop: 8,
+            bottom: nil, paddingBottom: 0,
             left: posterImage.rightAnchor, paddingLeft: 16,
             right: view.rightAnchor, paddingRight: 16,
             width: 0, height: 0)
         
         durationLabel.anchor(
             top: releaseDateLabel.bottomAnchor, paddingTop: 0,
-            bottom: ratingIcon.topAnchor, paddingBottom: 4,
+            bottom: nil, paddingBottom: 0,
             left: posterImage.rightAnchor, paddingLeft: 16,
             right: view.rightAnchor, paddingRight: 16,
             width: 0, height: 0)
         
         ratingIcon.anchor(
-            top: durationLabel.bottomAnchor, paddingTop: 0,
+            top: durationLabel.bottomAnchor, paddingTop: 4,
             bottom: backgroundImage.bottomAnchor, paddingBottom: 8,
             left: posterImage.rightAnchor, paddingLeft: 16,
             right: ratingLabel.leftAnchor, paddingRight: 0,
@@ -173,12 +199,16 @@ class MoviePopularDetailViewController: UIViewController {
         ratingLabel.anchor(
             top: nil, paddingTop: 0,
             bottom: ratingIcon.bottomAnchor, paddingBottom: 0,
-            left: ratingIcon.rightAnchor, paddingLeft: 16,
+            left: ratingIcon.rightAnchor, paddingLeft: 0,
             right: nil, paddingRight: 0,
             width: 0, height: 24)
         
-        let reviewsLabel = UILabel()
-        reviewsLabel.text = "reviews"
+        seeReviewsLabel.anchor(
+            top: nil, paddingTop: 0,
+            bottom: ratingIcon.bottomAnchor, paddingBottom: 0,
+            left: ratingLabel.rightAnchor, paddingLeft: 8,
+            right: view.rightAnchor, paddingRight: 16,
+            width: 0, height: 24)
         
         overviewLabel.anchor(
             top: posterImage.bottomAnchor, paddingTop: 16,
@@ -198,7 +228,7 @@ class MoviePopularDetailViewController: UIViewController {
     }
     
     func bindComponent() {
-        popular.subscribe(onNext: { [weak self] popular in
+        populars.subscribe(onNext: { [weak self] popular in
             self?.titleLabel.text = popular.title
             self?.releaseDateLabel.text = "Release Date: \(popular.releaseDate.formatDate())"
             self?.durationLabel.text = "Duration: \(popular.duration.minutesToHM())"
@@ -209,12 +239,17 @@ class MoviePopularDetailViewController: UIViewController {
         }).disposed(by: bag)
         
         interactor?.fetchPopularDetail(id: movieId ?? 0)
+        interactor?.fetchPopularReviews(id: movieId ?? 0)
     }
 }
 
 extension MoviePopularDetailViewController: MoviePopularDetailDisplayLogic {
-    func displayPopularDetail(detail: MoviePopularDetailViewModel.ViewModel) {
-        popular.onNext(detail)
-        popular.onCompleted()
+    func displayPopularDetail(detail: MoviePopularDetailViewModel.ViewModel.Detail) {
+        populars.onNext(detail)
+        populars.onCompleted()
+    }
+    
+    func displayPopularReviews(reviewList: [MoviePopularDetailViewModel.ViewModel.Reviews]) {
+        reviews = reviewList
     }
 }

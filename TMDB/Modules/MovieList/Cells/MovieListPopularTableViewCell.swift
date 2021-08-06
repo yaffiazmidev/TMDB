@@ -35,9 +35,7 @@ class MovieListPopularTableViewCell: UITableViewCell {
 //        label.textColor = .yellow
         return label
     }()
-    
-    var firstCreatedCell = true
-    
+        
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         selectionStyle = .none

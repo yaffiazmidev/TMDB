@@ -19,15 +19,26 @@ struct MoviePopularDetailViewModel {
 
     struct Response {
         let popularDetail: MoviePopularDetailEntity?
+        let popularReviews: MoviePopularReviewListEntity?
     }
 
     struct ViewModel {
-        let title: String
-        let overview: String
-        let posterPath: String
-        let backdropPath: String
-        let duration: Int
-        let releaseDate: String
-        let rating: Float
+        struct Detail {
+            let title: String
+            let overview: String
+            let posterPath: String
+            let backdropPath: String
+            let duration: Int
+            let releaseDate: String
+            let rating: Float
+        }
+        
+        struct Reviews {
+            let name: String
+            let username: String
+            let avatarPath: String
+            let rating: Int
+            let content: String
+        }
     }
 }
