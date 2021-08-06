@@ -5,6 +5,8 @@ PODS:
     - Moya/Core (= 14.0.0)
   - Moya/Core (14.0.0):
     - Alamofire (~> 5.0)
+  - Nimble (8.1.1)
+  - Quick (4.0.0)
   - RxCocoa (6.2.0):
     - RxRelay (= 6.2.0)
     - RxSwift (= 6.2.0)
@@ -16,6 +18,8 @@ PODS:
 DEPENDENCIES:
   - Kingfisher
   - Moya (~> 14.0)
+  - Nimble (= 8.1.1)
+  - Quick
   - RxCocoa
   - RxSwift
   - SwiftyJSON
@@ -25,6 +29,8 @@ SPEC REPOS:
     - Alamofire
     - Kingfisher
     - Moya
+    - Nimble
+    - Quick
     - RxCocoa
     - RxRelay
     - RxSwift
@@ -34,11 +40,13 @@ SPEC CHECKSUMS:
   Alamofire: e447a2774a40c996748296fa2c55112fdbbc42f9
   Kingfisher: 6c3df386db71d82c0817a429d2c9421a77396529
   Moya: 5b45dacb75adb009f97fde91c204c1e565d31916
+  Nimble: 5f8a2fb6fa343a7242dfdd9d42f7267419d464b2
+  Quick: 6473349e43b9271a8d43839d9ba1c442ed1b7ac4
   RxCocoa: 4baf94bb35f2c0ab31bc0cb9f1900155f646ba42
   RxRelay: e72dbfd157807478401ef1982e1c61c945c94b2f
   RxSwift: d356ab7bee873611322f134c5f9ef379fa183d8f
   SwiftyJSON: 2f33a42c6fbc52764d96f13368585094bfd8aa5e
 
-PODFILE CHECKSUM: 45683b3618c7c52d8bf9cf9027fc91eeac82ce92
+PODFILE CHECKSUM: a8c4d923348b11715f1ca90c65b2b8e1f7b8f9f7
 
 COCOAPODS: 1.10.1
